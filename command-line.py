@@ -699,10 +699,73 @@ def post_list(request):
 
 ## THAT'S IT! Time to go back to our template and display this QuerySet.
 
+# in your local console:
+git add -A .
+git status
+git commit -m "Changed the monblog/views.py: dynamic data templates"
+git push
+# in the PythonAnywhere console:
+git pull
 
+## DJANGO TEMPLATES ############################################################
 
+# Time to display some data! Django gives us some helpful built-in
+# template tags for that.
 
+## WHAT ARE TEMPLATE TAGS ?
 
+# In HTML, you can't really write Python code, because browsers don't understand
+# it. They only know HTML. We know that HTML is rather static, while Python
+# is much more dynamic.
+# Django template tags allow us to transfer Python-like things into HTML,
+# so you can build dynamic websites faster and easier.
+
+## DISPLAY POST LIST TEMPLATE
+
+# In the previous chapter, we gave our template a list of posts in the 'posts'
+# variable. Now we will display it in HTML.
+# To print a variable in Django templates, we use double curly brackets with
+# the variable's name inside, like this:
+{{ posts }}
+
+# Try this in your 'monblog/templates/monblog/post_lists.html' template.
+# Replace everything from the second to the third <div> with {{ posts }}.
+# Save the file and refresh the 'http://127.0.0.1:8000/' page to see the results.
+# Now in the web page, all we've got is this:
+Django Girls Blog
+[<Post: Hello Third>, <Post: Hello Fourth>, <Post: Sampletitle>]
+# This means that Django understands it as a list of objects.
+# Remember from 'Introduction to Python' how we can display lists ? Yes, with
+# 'for' loops! In a Django template, you do them like this:
+{% for post in posts %}
+    {{ post }}
+{% endfor %}
+# Try this in your template. Your webpage is now:
+Django Girls Blog
+Hello Third Hello Fourth Sampletitle
+# It works but we want them to be displayed like the static posts we created
+# earlier in the 'Introduction to HTML' chapter. You can mix HTML and template
+# tags. Our body will look like this:
+<body>
+    <div>
+        <h1><a href="">Django Girls blog</a></h1>
+    </div>
+    {% for post in posts %}
+        <div>
+            <p>published: {{ post.published_date }}</p>
+            <h1><a href="">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaks }}</p>
+        </div>
+    {% endfor %}
+</body>
+# - Everything you put between {% for %} and {% endfor %} will be repeated for each
+# object in the list. Now refresh your 'http://127.0.0.1:8000/' page.
+# - Please note that we used a slightly different notation this time :
+# {{ post.title }} or {{ post.text }}
+# We are accessing data in each of the fields defined in our 'Post' model.
+# Also the '|linebreaks' is piping the posts' text through a filter to convert
+# line-breaks into paragraphs.
+\
 
 
 

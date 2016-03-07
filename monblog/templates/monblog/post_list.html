@@ -7,15 +7,12 @@
 	<div>
 		<h1><a href="">Django Girls blog</a></h1>
 	</div>
-	<div>
-		<p>published: 06.06.2016, 20:58</p>
-		<h2><a href="">My first post</a></h2>
-		<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-	</div>
-	<div>
-		<p>published: 06.06.2016, 20:58</p>
-		<h2><a href="">My second post</a></h2>
-		<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-	</div>
+	{% for post in posts %}
+    	<div>
+    		<p>published: {{ post.published_date }}</p>
+    		<h1><a href="">{{ post.title }}</a></h1>
+    		<p>{{ post.text|linebreaks }}</p>
+    	</div>
+	{% endfor %}
 </body>
 </html>
