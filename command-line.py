@@ -5,6 +5,7 @@ from warnings import onceregistry
 from jinja2.exceptions import TemplatesNotFound
 from telnetlib import STATUS
 from tkinter.tix import Shell
+from pygments.lexers.templates import CssDjangoLexer
 mkdir djangogirls
 cd djangogirls
 
@@ -520,6 +521,8 @@ git add monblog/urls.py
 # then rerun :
 (myvenv)$ git pull
 
+################################################################################
+
 # website locally :
 http://127.0.0.1:8000/
 # website on the server :
@@ -706,6 +709,8 @@ git commit -m "Changed the monblog/views.py: dynamic data templates"
 git push
 # in the PythonAnywhere console:
 git pull
+# in the PythonAnywhere 'Web' tab: refresh with the "Reload" button.
+# Refresh the 
 
 ## DJANGO TEMPLATES ############################################################
 
@@ -765,7 +770,125 @@ Hello Third Hello Fourth Sampletitle
 # We are accessing data in each of the fields defined in our 'Post' model.
 # Also the '|linebreaks' is piping the posts' text through a filter to convert
 # line-breaks into paragraphs.
-\
+
+## ONE MORE THING
+
+# It'd be good to see if your website will still be working on the public
+# internet. Let's try deploying to PythonAnywhere again. 
+# - in your local console:
+git status
+git add -A .
+git status
+git commit -m "Modified templates to display posts from database."
+git push
+# - in the PythonAnywhere console:
+cd monblog
+git pull
+# - in the PythonAnywhere 'Web' tab: refresh with the "Reload" button.
+# - Refresh the 'http://root35.pythonanywhere.com' page.
+
+# If the blog posts on your PythonAnywhere site don't match the posts appearing
+# on the blog hosted on your local server, that's OK. The databases on your local
+# computer and PythonAnywhere don't sync with the rest of your files.
+
+## Now go ahead and ty adding a new post in your Django admin:
+http://root35.pythonanywhere.com/admin
+# Then refresh your page to see if the post appears there.
+# If it works, you can be proud ! You've earned a break !
+
+## CSS MAKE IT PRETTY ##########################################################
+
+# We don't want to start from scratch again. So once more, we'll use something
+# that programmers released on the internet for free.
+
+## LET'S USE BOOTSTRAP
+
+# Bootstrap is one of the most popular HTML and CSS frameworks for developping
+# beautiful websites : http://getbootstrap.com/
+# It was written by programmers who worked for Twitter. Now it's developed
+# by volunteers from all over the world.
+
+# -- Install Bootstrap
+# You only need to add this to your <head> in your 'monblog/templates/monblog/post_list.html':
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+# This doesn't add any files to your project. It just points to files that exist
+# on the internet. Just go ahead and open your website and refresh the
+# 'http://127.0.0.1:8000/' page. Looking nicer already!
+
+## STATIC FILES IN DJANGO
+
+# Finally we will take a closer look at these things we've been calling 'static files'.
+# Static files are all your CSS and images. Their content doesn't depend on the request
+# context and will be the same for every user.
+
+# -- Where to put static files for Django
+# Django already knows where to find the static files for the built-in "admin"
+# app. Now we just need to add some static files for our own app, 'monblog'.
+# We do that by creating a folder called 'static' inside the blog app (locally) :
+mkdir monblog/static
+# Django will automatically find any folders called "static" inside any of your
+# apps' folders. Then, it will be able to use their contents as static files.
+
+# -- Your first CSS file
+# Let's create a CSS file now, to add your own style to your web page.
+# Create a new directory called 'css' in your 'static' folder :
+mkdir monblog/static/css
+# Then create a new file called 'monblog.css' inside this 'css' directory :
+echo " " > monblog/static/css/monblog.css
+# and open it in your code editor. You'll only change the color of of your header:
+# you can find the color codes for many colors at 'http://www.colorpicker.com/'
+h1 a {
+    color: #FCA205;
+}
+
+# Then we need to also tell your HTML template that we added some CSS.
+# In the 'monblog/templates/monblog/post_list.html' file, add this line
+# at the very beginning of it, in order to load the static files:
+{% load staticfiles %}
+# then in the <head> section, after the links to the Bootstrap CSS files, add
+# this line:
+<link rel="stylesheet" href="{% static 'css/monblog.css' %}">
+# The browser reads the files in the order they're given, so we need to make
+# sure this is in the right place. Otherwise, the code in our file may override
+# code in Bootstrap files. We just told our template where our CSS file is located.
+
+# Now your file should look like this:
+{% load staticfiles %}
+<html>
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/monblog.css' %}">
+    <title>Django Girls blog</title>
+</head>
+
+# Save the file and refresh the 'http://127.0.0.1:8000/' page.
+
+## TEMPLATE EXTENDING ##########################################################
+
+# Another nice thing Django has for you is template extending. It means that you
+# can use the same parts of your HTML for different pages of your website.
+# Templates help when you want to use the same information/layout in more than
+# one place. You don't have to repeat yourself in every file! And if you want
+# to change something, you don't have to do it in every template, just once!
+
+## CREATE A BASE TEMPLATE
+
+# - A base template is the most basic template that you extend on every page
+# of your website. Create a 'base.html' file in 'monblog/templates/monblog'.
+# - Then open it up and copy everything from 'post_list.html' to it.
+# etc.
+
+
+
+
+
+
+
+
+
+
 
 
 

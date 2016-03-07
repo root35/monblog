@@ -1,18 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-	<title>Django Girls blog</title>
-</head>
-<body>
-	<div>
-		<h1><a href="">Django Girls blog</a></h1>
-	</div>
+{% extends 'monblog/base.html' %}
+
+{% block content %}
 	{% for post in posts %}
-    	<div>
-    		<p>published: {{ post.published_date }}</p>
-    		<h1><a href="">{{ post.title }}</a></h1>
-    		<p>{{ post.text|linebreaks }}</p>
-    	</div>
+    	<div class="post">
+        	<div class="date">
+	            {{ post.published_date }}
+        	</div>
+        	<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        	<p>{{ post.text|linebreaks }}</p>
+	    </div>
 	{% endfor %}
-</body>
-</html>
+{% endblock content %}
