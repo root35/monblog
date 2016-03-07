@@ -879,6 +879,8 @@ h1 a {
 # of your website. Create a 'base.html' file in 'monblog/templates/monblog'.
 # - Then open it up and copy everything from 'post_list.html' to it.
 # etc.
+# - In the 'post_list.html' file, you'll connect these two templates together
+# by adding an 'extends' tag to the beginning of the file:
 
 
 
